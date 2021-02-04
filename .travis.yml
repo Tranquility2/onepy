@@ -2,7 +2,7 @@ language: python            # this works for Linux but is an error on macOS or W
 jobs:
   include:
     - os: linux
-      dist: precise
+      dist: bionic
       python: 3.8
       addons:
         apt:
