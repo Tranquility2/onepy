@@ -1,8 +1,13 @@
 language: python            # this works for Linux but is an error on macOS or Windows
-jobs:
+matrix:
   include:
-    - name: "Python 3.8.0 on Xenial Linux"
-      python: 3.8           
+    - os: linux
+      dist: precise
+      python: 3.8
+    addons:
+      apt:
+        packages:
+          - chrpath
 install:
   - pip3 install --upgrade pip
   - pip3 install -r requirements.txt
