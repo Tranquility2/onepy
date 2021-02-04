@@ -2,15 +2,15 @@ language: python            # this works for Linux but is an error on macOS or W
 jobs:
   include:
     - name: "onepy Linux"
-    os: linux
-    dist: bionic
-    python: 3.8
-    addons:
-      apt:
-        packages:
-        - chrpath
-    install:
-      - pip3 install --upgrade pip
-      - pip3 install -r requirements.txt
-    script:
-      - python3 -m nuitka --assume-yes-for-downloads --standalone --onefile -o onepy_nix.bin --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
+      os: linux
+      dist: bionic
+      python: 3.8
+      addons:
+        apt:
+          packages:
+            - chrpath
+      install:
+        - pip3 install --upgrade pip
+        - pip3 install -r requirements.txt
+      script:
+        - python3 -m nuitka --assume-yes-for-downloads --standalone --onefile -o onepy_nix.bin --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
