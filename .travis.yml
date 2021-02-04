@@ -13,4 +13,5 @@ jobs:
         - pip3 install --upgrade pip
         - pip3 install -r requirements.txt
       script:
-        - python3 -m nuitka --assume-yes-for-downloads --standalone --onefile -o onepy_nix.bin --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
+        - python3 -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
+        - mv main.bin onepy_nix.bin
