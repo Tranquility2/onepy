@@ -4,10 +4,10 @@ jobs:
     - os: linux
       dist: precise
       python: 3.8
-    addons:
-      apt:
-        packages:
-          - chrpath
+      addons:
+        apt:
+          packages:
+            - chrpath
 install:
   - pip3 install --upgrade pip
   - pip3 install -r requirements.txt
