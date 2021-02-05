@@ -20,6 +20,9 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+        run: |
+        echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
+        echo test=${{ github.event.release.upload_url }}
   build-nix:
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +39,7 @@ jobs:
       run: |
         python -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
         mv main.bin onepy_nix.bin
-        echo ${{ needs.create_release_job.outputs.upload_url }}
+        echo upload_url=${{ needs.create_release_job.outputs.upload_url }}
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
