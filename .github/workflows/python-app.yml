@@ -1,23 +1,9 @@
 name: onepy Builder
 on:
-  push:
-    tags:
-      - 'v[0-9]+.*'
+  release:
+    types:
+      - published
 jobs:
-  create_release_job:
-    name: Create release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
   build-nix:
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +21,7 @@ jobs:
         python -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
         mv main.bin onepy_nix.bin
         echo upload_url=${{ needs.create_release_job.outputs.upload_url }}
-    - name: "Get upload_url"
+    - name: Get upload_url
       run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"
       id: release
     - name: Upload Release Asset
@@ -63,12 +49,15 @@ jobs:
       run: |
         python -m nuitka --assume-yes-for-downloads --standalone  --windows-product-version=1.0.0.0 --windows-company-name=onepy --windows-file-description=onepy --onefile main.py
         mv main.exe onepy_win.exe
+    - name: Get upload_url
+      run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"
+      id: release
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          upload_url: ${{ needs.create_release_job.outputs.upload_url }}
+          upload_url: ${{ steps.release.outputs.upload_url }}
           asset_path: ./onepy_win.exe
           asset_name: onepy_win.exe
           asset_content_type: application/octet-stream
