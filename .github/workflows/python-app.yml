@@ -50,5 +50,5 @@ jobs:
         pip install -r requirements.txt
     - name: Build with Nuitka
       run: |
-        python -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
+        python -m nuitka --assume-yes-for-downloads --standalone --onefile main.py
         mv main.bin onepy_osx.bin
