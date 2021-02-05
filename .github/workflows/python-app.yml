@@ -4,7 +4,7 @@
 name: onepy Builder
 on: push
 jobs:
-  build:
+  build-nix:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -20,3 +20,19 @@ jobs:
       run: |
         python -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
         mv main.bin onepy_nix.bin
+  build-win:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Build with Nuitka
+      run: |
+        python -m nuitka --assume-yes-for-downloads --standalone --onefile main.py
+        mv main.exe onepy_win.exe
