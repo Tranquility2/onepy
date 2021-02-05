@@ -18,24 +18,24 @@ jobs:
         python -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
         mv main.bin onepy_nix.bin
     - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-            tag_name: ${{ github.ref }}
-            release_name: Release ${{ github.ref }}
-            draft: false
-            prerelease: false
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
     - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: ./onepy_nix.bin
-            asset_name: onepy_nix.bin
-            asset_content_type: application/octet-stream
+      uses: actions/upload-release-asset@v1
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./onepy_nix.bin
+          asset_name: onepy_nix.bin
+          asset_content_type: application/octet-stream
   build-win:
     runs-on: windows-latest
     steps:
