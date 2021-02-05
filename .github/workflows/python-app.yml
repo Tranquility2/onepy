@@ -2,7 +2,7 @@ name: onepy Builder
 on:
   push:
     tags:
-      - 'V[0-9]+.*'
+      - 'v[0-9]+.*'
 jobs:
   create_release:
     name: Create release
