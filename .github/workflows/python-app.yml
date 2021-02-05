@@ -20,7 +20,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-        run: echo ${{ steps.create_release.outputs.upload_url }}
+      - run: echo ${{ steps.create_release.outputs.upload_url }}
   build-nix:
     runs-on: ubuntu-latest
     steps:
