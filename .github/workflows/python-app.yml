@@ -7,8 +7,6 @@ jobs:
   create_release_job:
     name: Create release
     runs-on: ubuntu-latest
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - name: Create release
         id: create_release
@@ -20,10 +18,6 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Testing
-        run: |
-          echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
-          echo test=${{ github.event.release.upload_url }}
   build-nix:
     runs-on: ubuntu-latest
     steps:
@@ -41,12 +35,15 @@ jobs:
         python -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
         mv main.bin onepy_nix.bin
         echo upload_url=${{ needs.create_release_job.outputs.upload_url }}
+    - name: "Get upload_url"
+      run: echo "::set-output name=upload_url::https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets{?name,label}"
+      id: release
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          upload_url: ${{ needs.create_release_job.outputs.upload_url }}
+          upload_url: ${{ steps.release.outputs.upload_url }}
           asset_path: ./onepy_nix.bin
           asset_name: onepy_nix.bin
           asset_content_type: application/octet-stream
