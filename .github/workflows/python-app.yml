@@ -20,6 +20,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+      - name: Testing
         run: |
           echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
           echo test=${{ github.event.release.upload_url }}
