@@ -21,8 +21,8 @@ jobs:
           draft: false
           prerelease: false
         run: |
-        echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
-        echo test=${{ github.event.release.upload_url }}
+          echo "::set-output name=upload_url::${{ steps.create_release.outputs.upload_url }}"
+          echo test=${{ github.event.release.upload_url }}
   build-nix:
     runs-on: ubuntu-latest
     steps:
