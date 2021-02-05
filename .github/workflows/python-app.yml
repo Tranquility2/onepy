@@ -17,25 +17,25 @@ jobs:
       run: |
         python -m nuitka --assume-yes-for-downloads --standalone --onefile --linux-onefile-icon /usr/share/pixmaps/python3.xpm main.py
         mv main.bin onepy_nix.bin
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./onepy_nix.bin
-          asset_name: onepy_nix.bin
-          asset_content_type: application/octet-stream
+    # - name: Create Release
+      # id: create_release
+      # uses: actions/create-release@v1
+      # env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # with:
+          # tag_name: ${{ github.run_number }}
+          # release_name: Release ${{ github.ref }}
+          # draft: false
+          # prerelease: false
+    # - name: Upload Release Asset
+      # uses: actions/upload-release-asset@v1
+      # env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # with:
+          # upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # asset_path: ./onepy_nix.bin
+          # asset_name: onepy_nix.bin
+          # asset_content_type: application/octet-stream
   build-win:
     runs-on: windows-latest
     steps:
@@ -52,6 +52,25 @@ jobs:
       run: |
         python -m nuitka --assume-yes-for-downloads --standalone  --windows-product-version=1.0.0.0 --windows-company-name=onepy --windows-file-description=onepy --onefile main.py
         mv main.exe onepy_win.exe
+    # - name: Create Release
+      # id: create_release
+      # uses: actions/create-release@v1
+      # env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # with:
+          # tag_name: ${{ github.ref }}
+          # release_name: Release ${{ github.ref }}
+          # draft: false
+          # prerelease: false
+    # - name: Upload Release Asset
+      # uses: actions/upload-release-asset@v1
+      # env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # with:
+          # upload_url: ${{ steps.create_release.outputs.upload_url }}
+          # asset_path: ./onepy_win.exe
+          # asset_name: onepy_win.exe
+          # asset_content_type: application/octet-stream
   build-osx:
     runs-on: macos-latest
     steps:
