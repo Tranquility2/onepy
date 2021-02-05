@@ -50,5 +50,6 @@ jobs:
         pip install -r requirements.txt
     - name: Build with Nuitka
       run: |
-        python -m nuitka --assume-yes-for-downloads --standalone --onefile main.py
-        mv main.bin onepy_osx.bin
+        python -m nuitka --assume-yes-for-downloads --standalone main.py
+        ls -lah ./main.dist
+        mv ./main.dist/main onepy_osx.bin
