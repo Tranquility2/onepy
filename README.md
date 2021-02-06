@@ -1,5 +1,11 @@
 # onepy
 This was a testing project to try and get a single file python workable using http://nuitka.net/
+For Windows, Linux & OSX
+
+Current Status:
+* Linux - working (see comment)
+* Windows - working
+* OSX - no standalone in Nuitka 
 
 For Linux I think a better alternative will be the "AppImage distributions of Python"  
 https://github.com/niess/python-appimage  
