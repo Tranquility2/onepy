@@ -1,2 +1,2 @@
 pyreadline==2.1
-Nuitka==0.6.11.5
+Nuitka==0.9
